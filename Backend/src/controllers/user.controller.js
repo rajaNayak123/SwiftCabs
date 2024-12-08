@@ -4,7 +4,11 @@ const registerUser = async (req, res) => {
   const { fullname, username, email, password } = req.body;
 
   try {
-    if ([fullname, username, email, password].some((field) => {field?.trim() === ""})) {
+    if (
+      [fullname, username, email, password].some((field) => {
+        field?.trim() === "";
+      })
+    ) {
       return res.status(400).json({ error: "All fields must be required" });
     }
 
@@ -37,7 +41,7 @@ const registerUser = async (req, res) => {
         fullname: newUser.fullname,
         password: newUser.password,
       },
-      token
+      token,
     });
   } catch (error) {
     console.error(error);
@@ -45,4 +49,37 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { registerUser };
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ mesage: "Email is required" });
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    const isMatch = await user.comparePassword(password);
+
+    if(!isMatch) {
+      return res.status(401).json({ message: "Password is incorrect" });
+    }
+
+    const token = await user.generateAuthToken();
+
+    const options = {
+      httpOnly: true,
+      secure: true
+    }
+
+    res
+    .status(200)
+    .cookie(token,options)
+    .json({user,token})
+
+};
+
+export { registerUser, loginUser };
