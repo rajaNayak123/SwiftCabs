@@ -72,6 +72,12 @@ const loginCaptain = async (req, res) => {
   res.status(200).cookie(token, options).json({ captain, token });
 };
 
+const captainProfile = async (req,res) =>{
+  return res
+  .status(200)
+  .json(req.user)
+}
+
 const logOutCaptain = async (req, res) => {
   await Captain.findByIdAndUpdate(
     req.captain._id,
@@ -93,4 +99,4 @@ const logOutCaptain = async (req, res) => {
     .clearCookies("token", options)
     .json(200, "captain logout successfully");
 };
-export { registerCaptain, loginCaptain, logOutCaptain };
+export { registerCaptain, loginCaptain, logOutCaptain,captainProfile };
