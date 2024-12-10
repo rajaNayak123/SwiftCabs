@@ -52,34 +52,64 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ mesage: "Email is required" });
-    }
+  if (!email) {
+    return res.status(400).json({ mesage: "Email is required" });
+  }
 
-    const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email }).select("+password");
 
-    if (!user) {
-      return res.status(401).json({ message: "User not found" });
-    }
+  if (!user) {
+    return res.status(401).json({ message: "User not found" });
+  }
 
-    const isMatch = await user.comparePassword(password);
+  const isMatch = await user.comparePassword(password);
 
-    if(!isMatch) {
-      return res.status(401).json({ message: "Password is incorrect" });
-    }
+  if (!isMatch) {
+    return res.status(401).json({ message: "Password is incorrect" });
+  }
 
-    const token = await user.generateAuthToken();
+  const token = await user.generateAuthToken();
 
-    const options = {
-      httpOnly: true,
-      secure: true
-    }
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
 
-    res
-    .status(200)
-    .cookie(token,options)
-    .json({user,token})
+  res.status(200).cookie(token, options).json({ user, token });
+};
+
+const logoutUser = async (req, res) => {
+    await User.findByIdAndUpdate(
+    req.user._id,
+      {
+        $set: { token: undefined },
+      },
+      {
+        new: true,
+      }
+  );
+  
+  const options ={
+    httpOnly: true,
+    secure: true,
+  };
+
+  res
+  .status(200)
+  .clearCookies("token", options)
+  .json(200,"user logout successfully")
 
 };
 
-export { registerUser, loginUser };
+const userProfile = async (req, res) => {
+  return res
+  .status(200)
+  .json(req.user)
+}
+
+export { 
+  registerUser, 
+  loginUser,
+  logoutUser,
+  userProfile
+};

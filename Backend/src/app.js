@@ -10,8 +10,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" })) // extended mean 
 app.use(express.static("public"))
 app.use(cookieParser());
 
-import userRouter from './routes/user.route.js'
+import userRouter from './routes/user.route.js';
+import captainRouter from './routes/captain.route.js'
 
 app.use('/user',userRouter);
+app.use('/captain',captainRouter);
 
 export {app}
