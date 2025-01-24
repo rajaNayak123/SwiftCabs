@@ -15,17 +15,17 @@ const Captuser = () => {
 
         <div className="relative z-10 flex items-center justify-center h-full">
             <div className="flex flex-col justify-center ">
-                <Link to='/login' class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm py-3 px-20 rounded">
+                <Link to='/signup' className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm py-3 px-20 rounded">
                 User
                 </Link>
 
-                 <div class="flex justify-between items-center text-xs uppercase mt-4 gap-4">
-                        <span class="w-full h-[1px] bg-gray-300"></span>
+                 <div className="flex justify-between items-center text-xs uppercase mt-4 gap-4">
+                        <span className="w-full h-[1px] bg-gray-300"></span>
                         <span className="text-white">OR</span>
-                        <span class="w-full h-[1px] bg-gray-300"></span>
+                        <span className="w-full h-[1px] bg-gray-300"></span>
                  </div>
 
-                 <Link to='/captain-login' class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm py-3 px-20 mt-5 rounded">
+                 <Link to='/captain-signup' className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm py-3 px-20 mt-5 rounded">
                   Rider
                 </Link>
 
