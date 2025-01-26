@@ -1,38 +1,41 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useContext } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import axios from "axios";
+import {userDataContext} from "../context/UserContext.jsx";
 const UserSignup = () => {
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confpass, setConfpass] = useState("");
-  // const [signupdata, setSignupdata] = useState({});
+  // const [confpass, setConfpass] = useState("");
 
-  const sumbihandler = (e) => {
+  const navigate = useNavigate()
+  const { user, setUser } = useContext(userDataContext)
+  const sumbihandler = async (e) => {
     e.preventDefault();
 
     if (!email.includes("@")) {
       alert("Please enter your valid email");
       return;
     }
-
     if (password.length < 6) {
       alert("Password must be at least 6 characters long");
       return;
     }
 
-    if (password != confpass) {
-      alert("Password mismatch");
-      return;
-    }
-    const newdata = { fullname, username, email, password, confpass};
+    const newdata = { fullname, username, email, password};
      
-
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`,newdata)
+    if(response.status == 201){
+      const data = response.data
+      setUser(data.user)
+      localStorage.setItem('token', data.token)
+      navigate('/dashboard')
+    }
     setFullname("");
     setUsername("");
     setEmail("");
     setPassword("");
-    setConfpass("");
   };
   return (
     <div
@@ -92,7 +95,7 @@ const UserSignup = () => {
               className="w-full p-4 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
-          <div className="relative mt-4">
+          {/* <div className="relative mt-4">
             <input
               type="password"
               value={confpass}
@@ -100,7 +103,7 @@ const UserSignup = () => {
               placeholder="Conform Password"
               className="w-full p-4 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full py-3 mt-4 text-sm font-medium text-white uppercase bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

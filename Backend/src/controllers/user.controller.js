@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
 
     await newUser.save();
 
-    const token = newUser.generateAuthToken();
+    const token = await newUser.generateAuthToken();
 
     res.status(201).json({
       message: "User created successfully",
@@ -39,7 +39,7 @@ const registerUser = async (req, res) => {
         username: newUser.username,
         email: newUser.email,
         fullname: newUser.fullname,
-        password: newUser.password,
+        // password: newUser.password,
       },
       token,
     });
@@ -75,7 +75,7 @@ const loginUser = async (req, res) => {
     secure: true,
   };
 
-  res.status(200).cookie(token, options).json({ user, token });
+  res.status(200).cookie("token", token, options).json({ user, token });
 };
 
 const logoutUser = async (req, res) => {
@@ -96,7 +96,7 @@ const logoutUser = async (req, res) => {
 
   res
   .status(200)
-  .clearCookies("token", options)
+  .clearCookie("token", options)
   .json(200,"user logout successfully")
 
 };

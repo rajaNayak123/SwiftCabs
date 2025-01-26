@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { userDataContext } from "../context/UserContext.jsx";
+import axios from "axios";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [logindata, setloginData] = useState("");
 
-  const sumbitHandler = (e) => {
+  const { user, setUser } = useContext(userDataContext);
+  const navigate = useNavigate();
+
+  const sumbitHandler = async (e) => {
     e.preventDefault();
 
     if (!email.includes("@")) {
@@ -16,7 +21,18 @@ const UserLogin = () => {
 
     const newdata = { email, password };
 
-   
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/user/login`,
+      newdata
+    );
+
+    if (response.status == 200) {
+      const data = response.data;
+      setUser(data);
+      localStorage.setItem('token', data.token);
+      navigate("/dashboard");
+    }
+
     setEmail("");
     setPassword("");
   };
