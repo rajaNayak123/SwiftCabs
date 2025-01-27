@@ -6,7 +6,7 @@ import UserSignup from './pages/UserSignup.jsx';
 import CaptainLogin from './pages/CaptainLogin.jsx';
 import CaptainSignup from './pages/CaptainSignup.jsx';
 import Captuser from './pages/Captuser.jsx';
-import Dashboard from './pages/Dashboard.jsx';
+import UserDashboard from './pages/UserDashboard.jsx';
 import UserVerify from './pages/UserVerify.jsx';
 import UserLogout from './pages/UserLogout.jsx';
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
     <div>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/dashboard' element={<UserVerify><Dashboard/></UserVerify>}/>
+        <Route path='/user-dashboard' element={<UserVerify><UserDashboard/></UserVerify>}/>
         <Route path='/user-or-captain' element={<Captuser/>}/>
         <Route path='/login' element={<UserLogin/>}/>
         <Route path='/signup' element={<UserSignup/>}/>
