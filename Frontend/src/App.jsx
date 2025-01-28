@@ -10,6 +10,8 @@ import UserDashboard from "./pages/UserDashboard.jsx";
 import UserVerify from "./pages/UserVerify.jsx";
 import UserLogout from "./pages/UserLogout.jsx";
 import CaptainDashboard from "./pages/CaptainDashboard.jsx";
+import CaptainVerify from "./pages/CaptainVerify.jsx";
+
 const App = () => {
   return (
     <div>
@@ -37,7 +39,14 @@ const App = () => {
             </UserVerify>
           }
         />
-        <Route path="/captain-dashboard" element={<CaptainDashboard/>}/>
+        <Route
+          path="/captain-dashboard"
+          element={
+            <CaptainVerify>
+              <CaptainDashboard />
+            </CaptainVerify>
+          }
+        />
       </Routes>
     </div>
   );
