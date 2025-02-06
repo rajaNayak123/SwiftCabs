@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import LocationSearchPanel from "../components/LocationSearchPanel.jsx";
 import VehiclePanel from "../components/VehiclePanel.jsx";
 import SelectRide from "../components/SelectRide.jsx";
+import LookingForDriver from "../components/LookingForDriver.jsx";
+import WatingForDriver from "../components/WatingForDriver.jsx";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
@@ -12,10 +14,16 @@ const UserDashboard = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
   const [selectRidePanel, setSelectRidePanel] = useState(false);
+  const [vehicleFound, setVehicleFound] = useState(false);
+  const [watingForDriver, setWatingForDriver] = useState(false);
+
+
   const panelRref = useRef(null);
   const panelCloseRef = useRef(null);
   const vehiclPanelRef = useRef(null);
   const selectRidePanelRef = useRef(null);
+  const vehicleFoundRef = useRef(null);
+  const watingForDriverRef = useRef(null);
 
   const sumbitHandler = (e) => {
     e.preventDefault();
@@ -64,6 +72,30 @@ const UserDashboard = () => {
       });
     }
   }, [selectRidePanel]);
+
+  useGSAP(() => {
+    if (vehicleFound) {
+      gsap.to(vehicleFoundRef.current, {
+        transform: "translateY(0)",
+      });
+    } else {
+      gsap.to(vehicleFoundRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [vehicleFound]);
+
+  useGSAP(() => {
+    if (watingForDriver) {
+      gsap.to(watingForDriverRef.current, {
+        transform: "translateY(0)",
+      });
+    } else {
+      gsap.to(watingForDriverRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [watingForDriver]);
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -127,13 +159,27 @@ const UserDashboard = () => {
       </div>
 
       {/* Vehicle Panel */}
-      <div ref={vehiclPanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10">
-        <VehiclePanel setSelectRidePanel={setSelectRidePanel} setVehiclePanelOpen={setVehiclePanelOpen}/>
+      <div
+        ref={vehiclPanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10"
+      >
+        <VehiclePanel
+          setSelectRidePanel={setSelectRidePanel}
+          setVehiclePanelOpen={setVehiclePanelOpen}
+        />
       </div>
 
       {/* Select-Ride Panel */}
-      <div ref={selectRidePanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10">
-          <SelectRide/>
+      <div ref={selectRidePanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10" >
+        <SelectRide setSelectRidePanel={setSelectRidePanel} setVehicleFound={setVehicleFound}/>
+      </div>
+
+      <div ref={vehicleFoundRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10">
+        <LookingForDriver setVehicleFound={setVehicleFound} />
+      </div>
+
+      <div ref={watingForDriverRef} className="fixed w-full z-10 bottom-0 bg-white px-3 py-10">
+        <WatingForDriver watingForDriver={watingForDriver}/>
       </div>
     </div>
   );

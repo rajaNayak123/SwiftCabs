@@ -12,6 +12,7 @@ import UserLogout from "./pages/UserLogout.jsx";
 import CaptainDashboard from "./pages/CaptainDashboard.jsx";
 import CaptainVerify from "./pages/CaptainVerify.jsx";
 import CaptainLogout from "./pages/CaptainLogout.jsx";
+import Riding from "./pages/Riding.jsx";
 const App = () => {
   return (
     <div>
@@ -25,6 +26,7 @@ const App = () => {
             </UserVerify>
           }
         />
+        <Route path="/riding" element={<Riding/>} />
         <Route path="/user-or-captain" element={<Captuser />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSignup />} />
