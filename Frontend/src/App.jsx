@@ -44,9 +44,9 @@ const App = () => {
         <Route
           path="/captain-dashboard"
           element={
-            <CaptainVerify>
+            // <CaptainVerify>
               <CaptainDashboard />
-            </CaptainVerify>
+            // </CaptainVerify>
           }
         />
         <Route
