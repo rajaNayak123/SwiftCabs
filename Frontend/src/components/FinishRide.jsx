@@ -1,22 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
-const ConfirmRidePopUp = (props) => {
-  const [otp, setotp] = React.useState('')
-  const sumbitHandler = (e) =>{
-    e.preventDefault();
-  }
+import React from 'react'
+import {Link} from 'react-router-dom'
+const FinishRide = (props) => {
   return (
     <div>
       <h5
         onClick={() => {
-          props.setridePopUp(false);
+          props.setfinishRidePanel(false);
         }}
-        className="p-1 text-center w-[93%] absolute top-0"
+        className="p-1 text-center w-[95%] absolute top-0"
       >
         <i className="text-3xl cursor-pointer ri-arrow-down-wide-line"></i>
       </h5>
       <h3 className="text-2xl font-semibold mb-5">
-        Confirm this ride to start!
+       Finish this ride raja nayak!
       </h3>
 
       <div className="flex items-center justify-between mb-3 bg-gray-100 rounded-lg p-3">
@@ -59,29 +55,14 @@ const ConfirmRidePopUp = (props) => {
             </div>
           </div>
         </div>
-        <div className="mt-6 w-full">
-          <form onSubmit={(e)=>{sumbitHandler(e)}} className="flex flex-col items-center gap-2">
-            <input value={otp} onChange={(e)=>{setotp(e.target.value)}} type="text" className="bg-[#eee] py-2 px-12 text-lg rounded-lg w-72 mt-3" placeholder="Enter your OTP"/>
-            <Link
-              to="/captain-riding"
-              className="w-72 mt-3 flex justify-center bg-green-500 text-white font-semibold p-2 rounded-lg"
-            >
-              Comfirm
+        <div className="mt-6 w-full ">
+            <Link to="/captain-dashboard" className="w-72 ml-9 mt-3 flex justify-center bg-green-500 text-white font-semibold p-2 rounded-lg">
+              Finish Ride
             </Link>
-            <button
-              onClick={() => {
-                props.setConfirmRidePopUp(false);
-                props.setridePopUp(false);
-              }}
-              className="w-72 mt-3 bg-red-500 text-white font-semibold p-2 rounded-lg"
-            >
-              Cancle
-            </button>
-          </form>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConfirmRidePopUp;
+export default FinishRide
